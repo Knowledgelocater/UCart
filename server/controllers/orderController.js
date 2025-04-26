@@ -69,7 +69,7 @@ export const placeOrderStripe = async (req, res) => {
         });
 
         // Stripe Gateway initialize
-        const stripeInstance = stripe(process.env.STRIPE_SECRET_KEY);
+        const stripeInstance = new stripe(process.env.STRIPE_SECRET_KEY);
 
         // Create line items for stripe
         const line_items = productData.map((item) => {
@@ -106,7 +106,7 @@ export const placeOrderStripe = async (req, res) => {
 // Stripe Webhooks to verify payments action : /stripe
 export const stripeWebhooks = async (request , response) => {
     // Stripe Gateway intialize
-    const stripeInstance = stripe(process.env.STRIPE_SECRET_KEY);
+    const stripeInstance = new stripe(process.env.STRIPE_SECRET_KEY);
 
     const sig = request.headers["stripe-signature"];
     let event;
