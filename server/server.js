@@ -21,10 +21,11 @@ await connectCloudinary();
 
 // Allowed origins
 const allowedOrigin = [
-  'http://localhost:5173',
-  'https://u-cart-bice.vercel.app',
-  'https://u-cart-git-main-kinshuks-projects-433952cd.vercel.app',
-  'https://u-cart-kinshuks-projects-433952cd.vercel.app'
+    'http://localhost:5173',
+    'https://u-cart-bice.vercel.app',
+    'https://u-cart-git-main-kinshuks-projects-433952cd.vercel.app',
+    'https://u-cart-kinshuks-projects-433952cd.vercel.app',
+    'https://u-cart-front-end.vercel.app'  // Add this if needed
 ];
 
 // 1️⃣ CORS middleware first
