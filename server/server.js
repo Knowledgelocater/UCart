@@ -18,7 +18,7 @@ const port = process.env.PORT || 4000; // if port is available in the env then i
 await connectDB(); // call the connectDB function to connect to the database
 await connectCloudinary();
 
-const allowedOrigin = ['http://localhost:5173' , 'https://u-cart-bice.vercel.app']; // allowed origins for CORS
+const allowedOrigin = ['http://localhost:5173' , 'https://u-cart-bice.vercel.app' , 'https://u-cart-git-main-kinshuks-projects-433952cd.vercel.app', 'https://u-cart-kinshuks-projects-433952cd.vercel.app']; // allowed origins for CORS
 
 app.post('/stripe',express.raw({type: 'application/json'}), stripeWebhooks)
 
