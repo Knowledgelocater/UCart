@@ -24,8 +24,7 @@ const allowedOrigin = [
     'http://localhost:5173',
     'https://u-cart-bice.vercel.app',
     'https://u-cart-git-main-kinshuks-projects-433952cd.vercel.app',
-    'https://u-cart-kinshuks-projects-433952cd.vercel.app',
-    'https://u-cart-front-end.vercel.app'  // Add this if needed
+    'https://u-cart-kinshuks-projects-433952cd.vercel.app'
 ];
 
 // 1️⃣ CORS middleware first
@@ -48,6 +47,5 @@ app.use('/api/address', addressRouter);
 app.use('/api/order', orderRouter);
 
 // 5️⃣ Start server
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
+export default app;
+
