@@ -1,8 +1,8 @@
 import cookieParser from 'cookie-parser';
 import express from 'express';
-import cors from 'cors';
-import connectDB from './configs/db.js';
-import 'dotenv/config';
+import cors from 'cors'; // import cors for cross-origin resource sharing
+import connectDB from './configs/db.js'; // import the connectDB function from the db.js file
+import 'dotenv/config'; // import dotenv to load environment variables
 import userRouter from './routes/userRoute.js';
 import sellerRouter from './routes/sellerRoute.js';
 import connectCloudinary from './configs/cloudinary.js';
@@ -12,40 +12,29 @@ import addressRouter from './routes/addressRoute.js';
 import orderRouter from './routes/orderRoute.js';
 import { stripeWebhooks } from './controllers/orderController.js';
 
-const app = express();
-const port = process.env.PORT || 4000;
+const app = express();  // express app created
+const port = process.env.PORT || 4000; // if port is available in the env then it will run on that port else it will run on 4000
 
-// Connect to DB and Cloudinary
-await connectDB();
+await connectDB(); // call the connectDB function to connect to the database
 await connectCloudinary();
 
-// Allowed origins
-const allowedOrigin = [
-    'http://localhost:5173',
-    'https://u-cart-bice.vercel.app',
-    'https://u-cart-git-main-kinshuks-projects-433952cd.vercel.app',
-    'https://u-cart-kinshuks-projects-433952cd.vercel.app'
-];
+const allowedOrigin = ['http://localhost:5173']; // allowed origins for CORS
 
-// 1️⃣ CORS middleware first
-app.use(cors({ origin: allowedOrigin, credentials: true }));
+app.post('/stripe',express.raw({type: 'application/json'}), stripeWebhooks)
 
-// 2️⃣ Stripe webhook (must use raw body)
-app.post('/stripe', express.raw({ type: 'application/json' }), stripeWebhooks);
+// middleware configuration
+app.use(express.json()); // middleware to parse json data
+app.use(cookieParser()); // middleware to parse cookies
+app.use(cors({origin:allowedOrigin , credentials:true})); // middleware to allow cross-origin requests
 
-// 3️⃣ Normal middlewares
-app.use(express.json());
-app.use(cookieParser());
+app.get('/' , (req,res)=> res.send("API is Working"));
+app.use('/api/user' , userRouter); // use the userRouter for all routes starting with /api/user
+app.use('/api/seller' , sellerRouter);
+app.use('/api/product' , productRouter);
+app.use('/api/cart' , cartRouter);
+app.use('/api/address' , addressRouter);
+app.use('/api/order' , orderRouter);
 
-// 4️⃣ Routes
-app.get('/', (req, res) => res.send("API is Working"));
-app.use('/api/user', userRouter);
-app.use('/api/seller', sellerRouter);
-app.use('/api/product', productRouter);
-app.use('/api/cart', cartRouter);
-app.use('/api/address', addressRouter);
-app.use('/api/order', orderRouter);
-
-// 5️⃣ Start server
-export default app;
-
+app.listen(port , () =>{
+    console.log(`Server is running on http://localhost:${port}`); // log the port on which the server is running
+})
