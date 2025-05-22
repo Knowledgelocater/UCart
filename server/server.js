@@ -25,7 +25,19 @@ app.post('/stripe',express.raw({type: 'application/json'}), stripeWebhooks)
 // middleware configuration
 app.use(express.json()); // middleware to parse json data
 app.use(cookieParser()); // middleware to parse cookies
-app.use(cors({origin:allowedOrigin , credentials:true})); // middleware to allow cross-origin requests
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true); // allow non-browser requests or tools like Postman
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = `CORS policy does not allow access from origin: ${origin}`;
+      return callback(new Error(msg), false);
+    }
+    return callback(null, origin);
+  },
+  credentials: true
+}));
+
 
 app.get('/' , (req,res)=> res.send("API is Working"));
 app.use('/api/user' , userRouter); // use the userRouter for all routes starting with /api/user
