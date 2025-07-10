@@ -25,7 +25,7 @@ export const register = async (req , res) => {
 
         const token = jwt.sign({id : user._id}, process.env.JWT_SECRET, {expiresIn: "7d"}); // generate a token for the user
 
-        res.cookie('token', token , {
+        res.cookie('token', token , {  //Cookie “token” has been rejected because it is in a cross-site context and its “SameSite” is “Lax” or “Strict”.
             httpOnly: true,
             secure: true ,// process.env.NODE_ENV === "production", // Set secure cookie in production
             sameSite: "None", //process.env.NODE_ENV === "production" ? 'none' : "strict", //CSRF protection  
@@ -62,7 +62,7 @@ export const login = async (req , res) => {
 
         const token = jwt.sign({id : user._id}, process.env.JWT_SECRET, {expiresIn: "7d"}); // generate a token for the user
 
-        res.cookie('token', token , {
+        res.cookie('token', token , {  //Cookie “token” has been rejected because it is in a cross-site context and its “SameSite” is “Lax” or “Strict”.
             httpOnly: true,
             secure: true, //process.env.NODE_ENV === "production", // Set secure cookie in production
             sameSite: "None", //process.env.NODE_ENV === "production" ? 'none' : "strict", //CSRF protection  
@@ -93,10 +93,10 @@ export const isAuth = async (req , res) => {
 // Logout User : /api/user/logout
 export const logout = async (req , res) => {
     try {
-        res.clearCookie('token' , {
+        res.clearCookie('token' , { //Cookie “token” has been rejected because it is in a cross-site context and its “SameSite” is “Lax” or “Strict”.
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production", // Set secure cookie in production
-            sameSite: process.env.NODE_ENV === "production" ? 'none' : "strict", //CSRF protection
+            secure: true, //process.env.NODE_ENV === "production", // Set secure cookie in production
+            sameSite: "None",//process.env.NODE_ENV === "production" ? 'none' : "strict", //CSRF protection
         });
         return res.json({success : true , message: "Logout Successfully"}); // return success message
     } catch (error) {
