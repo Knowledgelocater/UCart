@@ -23,9 +23,9 @@ const allowedOrigin = ['http://localhost:5173' , 'https://u-cart-new.vercel.app'
 app.post('/stripe',express.raw({type: 'application/json'}), stripeWebhooks)
 
 // middleware configuration
+app.use(cors({origin: allowedOrigin, credentials: true})); // middleware to allow cross-origin requests
 app.use(express.json()); // middleware to parse json data
 app.use(cookieParser()); // middleware to parse cookies
-app.use(cors({origin: allowedOrigin, credentials: true})); // middleware to allow cross-origin requests
 
 app.get('/' , (req,res)=> res.send("API is Working"));
 app.use('/api/user' , userRouter); // use the userRouter for all routes starting with /api/user
