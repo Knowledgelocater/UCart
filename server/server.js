@@ -18,14 +18,30 @@ const port = process.env.PORT || 4000; // if port is available in the env then i
 await connectDB(); // call the connectDB function to connect to the database
 await connectCloudinary();
 
-const allowedOrigin = ['http://localhost:5173' , 'https://u-cart-six.vercel.app']; // allowed origins for CORS
+const allowedOrigins = ['http://localhost:5173' , 'https://u-cart-six.vercel.app' , 'https://ucart-2.onrender.com']; // allowed origins for CORS
 
 app.post('/stripe',express.raw({type: 'application/json'}), stripeWebhooks)
 
 // middleware configuration
 app.use(express.json()); // middleware to parse json data
 app.use(cookieParser()); // middleware to parse cookies
+<<<<<<< HEAD
 app.use(cors({origin: true, credentials: true})); // middleware to allow cross-origin requests
+=======
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true); // allow non-browser requests or tools like Postman
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = `CORS policy does not allow access from origin: ${origin}`;
+      return callback(new Error(msg), false);
+    }
+    return callback(null, origin);
+  },
+  credentials: true
+}));
+
+>>>>>>> 1b80805705d16f5859515c9c8e9c0f97fd183103
 
 app.get('/' , (req,res)=> res.send("API is Working"));
 app.use('/api/user' , userRouter); // use the userRouter for all routes starting with /api/user
