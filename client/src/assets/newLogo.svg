@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 40" width="200" height="40">
+
+  <!-- U as SVG Icon -->
+  <g transform="translate(0,4)" stroke="#4FBF8B" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 7h12l-1 13H7L6 7z"/>
+    <path d="M9 7a3 3 0 0 1 6 0"/>
+  </g>
+
+  <!-- 'Cart' Text -->
+  <text x="40" y="24" 
+        font-size="22" 
+        font-family="Segoe UI, Roboto, Helvetica, Arial, sans-serif" 
+        fill="#4FBF8B" 
+        font-weight="600">
+    Cart
+  </text>
+
+</svg>
